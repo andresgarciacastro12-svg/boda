@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+</head>
+
+<body style="text-align:center; margin-top:100px; font-family: 'Georgia', serif; background:#f8f7f4;">
+
+<audio id="music" loop>
+  <source src="musica.mp3" type="audio/mpeg">
+</audio>
+
+<div onclick="playMusic()" style="cursor:pointer;">
+
+  <div style="width:220px; height:3px; background:#d6d3cd; margin:30px auto;"></div>
+
+  <div style="
+    width:70px;
+    height:70px;
+    border-radius:50%;
+    border:2px solid #6b705c;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    margin:auto;
+    font-size:22px;
+    color:#6b705c;
+    transition:0.3s;">
+    ▶
+  </div>
+
+  <p style="margin-top:20px; font-size:13px; color:#6b705c; letter-spacing:2px;">
+    ESCUCHA NUESTRA CANCIÓN
+  </p>
+
+</div>
+
+<script>
+function playMusic() {
+  var audio = document.getElementById("music");
+  audio.play();
+}
+</script>
+
+</body>
+</html>
