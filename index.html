@@ -2,48 +2,63 @@
 <html>
 <head>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
 <style>
   body {
     text-align: center;
-    margin-top: 100px;
+    margin-top: 80px;
     font-family: 'Georgia', serif;
     background: #f8f7f4;
   }
 
-  .player-container {
+  .player {
     display: inline-block;
-    cursor: pointer;
-    padding: 20px;
+    padding: 25px;
   }
 
-  .progress-bar {
-    width: 220px;
-    height: 4px;
-    background: #d6d3cd;
-    margin: 30px auto;
-    border-radius: 2px;
-  }
-
-  .play-button {
-    width: 70px;
-    height: 70px;
+  .play-btn {
+    width: 75px;
+    height: 75px;
     border-radius: 50%;
     border: 2px solid #6b705c;
     display: flex;
     align-items: center;
     justify-content: center;
     margin: auto;
-    font-size: 28px;
+    font-size: 30px;
     color: #6b705c;
+    cursor: pointer;
     transition: 0.3s;
   }
 
-  .play-button:hover {
+  .play-btn:hover {
     background: #6b705c20;
   }
 
+  .progress-container {
+    width: 240px;
+    height: 6px;
+    background: #d6d3cd;
+    margin: 25px auto;
+    border-radius: 3px;
+    cursor: pointer;
+    overflow: hidden;
+  }
+
+  .progress {
+    height: 100%;
+    width: 0%;
+    background: #6b705c;
+  }
+
+  .time {
+    font-size: 12px;
+    color: #6b705c;
+    margin-top: 5px;
+  }
+
   .caption {
-    margin-top: 20px;
+    margin-top: 15px;
     font-size: 13px;
     color: #6b705c;
     letter-spacing: 2px;
@@ -53,31 +68,64 @@
 
 <body>
 
-<audio id="music" loop>
+<audio id="audio" loop>
   <source src="musica.mp3" type="audio/mpeg">
 </audio>
 
-<div class="player-container" onclick="toggleMusic()">
-  <div class="progress-bar"></div>
-  <div id="playBtn" class="play-button">▶</div>
+<div class="player">
+  <div id="playBtn" class="play-btn">▶</div>
+
+  <div class="progress-container" id="progressContainer">
+    <div class="progress" id="progress"></div>
+  </div>
+
+  <div class="time" id="time">0:00 / 0:00</div>
+
   <div class="caption">ESCUCHA NUESTRA CANCIÓN</div>
 </div>
 
 <script>
-  const music = document.getElementById('music');
-  const playBtn = document.getElementById('playBtn');
-  let isPlaying = false;
+  const audio = document.getElementById("audio");
+  const playBtn = document.getElementById("playBtn");
+  const progress = document.getElementById("progress");
+  const progressContainer = document.getElementById("progressContainer");
+  const time = document.getElementById("time");
 
-  function toggleMusic() {
-    if(isPlaying) {
-      music.pause();
-      playBtn.textContent = "▶";
-      isPlaying = false;
-    } else {
-      music.play();
+  // PLAY / PAUSE
+  playBtn.addEventListener("click", () => {
+    if (audio.paused) {
+      audio.play();
       playBtn.textContent = "⏸";
-      isPlaying = true;
+    } else {
+      audio.pause();
+      playBtn.textContent = "▶";
     }
+  });
+
+  // ACTUALIZAR BARRA Y TIEMPO
+  audio.addEventListener("timeupdate", () => {
+    const percent = (audio.currentTime / audio.duration) * 100;
+    progress.style.width = percent + "%";
+
+    let current = formatTime(audio.currentTime);
+    let duration = formatTime(audio.duration);
+    time.textContent = `${current} / ${duration}`;
+  });
+
+  // CLICK EN BARRA (AVANZAR)
+  progressContainer.addEventListener("click", (e) => {
+    const width = progressContainer.clientWidth;
+    const clickX = e.offsetX;
+    audio.currentTime = (clickX / width) * audio.duration;
+  });
+
+  // FORMATO DE TIEMPO
+  function formatTime(seconds) {
+    if (isNaN(seconds)) return "0:00";
+    let min = Math.floor(seconds / 60);
+    let sec = Math.floor(seconds % 60);
+    if (sec < 10) sec = "0" + sec;
+    return min + ":" + sec;
   }
 </script>
 
