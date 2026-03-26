@@ -5,42 +5,43 @@
 
 <style>
   body {
-    text-align: center;
-    margin-top: 80px;
-    font-family: 'Georgia', serif;
-    background: #f8f7f4;
+    margin: 0;
+    background: transparent; /* 🔥 CLAVE */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
   }
 
   .player {
-    display: inline-block;
-    padding: 25px;
+    text-align: center;
   }
 
   .play-btn {
-    width: 75px;
-    height: 75px;
+    width: 70px;
+    height: 70px;
     border-radius: 50%;
     border: 2px solid #6b705c;
     display: flex;
     align-items: center;
     justify-content: center;
-    margin: auto;
-    font-size: 30px;
+    font-size: 28px;
     color: #6b705c;
     cursor: pointer;
     transition: 0.3s;
+    background: transparent; /* 🔥 CLAVE */
   }
 
   .play-btn:hover {
-    background: #6b705c20;
+    background: rgba(107,112,92,0.1);
   }
 
   .progress-container {
-    width: 240px;
-    height: 6px;
-    background: #d6d3cd;
-    margin: 25px auto;
-    border-radius: 3px;
+    width: 200px;
+    height: 4px;
+    background: rgba(214,211,205,0.6);
+    margin: 20px auto;
+    border-radius: 2px;
     cursor: pointer;
     overflow: hidden;
   }
@@ -51,15 +52,9 @@
     background: #6b705c;
   }
 
-  .time {
-    font-size: 12px;
-    color: #6b705c;
-    margin-top: 5px;
-  }
-
   .caption {
-    margin-top: 15px;
-    font-size: 13px;
+    margin-top: 10px;
+    font-size: 12px;
     color: #6b705c;
     letter-spacing: 2px;
   }
@@ -79,8 +74,6 @@
     <div class="progress" id="progress"></div>
   </div>
 
-  <div class="time" id="time">0:00 / 0:00</div>
-
   <div class="caption">ESCUCHA NUESTRA CANCIÓN</div>
 </div>
 
@@ -89,9 +82,7 @@
   const playBtn = document.getElementById("playBtn");
   const progress = document.getElementById("progress");
   const progressContainer = document.getElementById("progressContainer");
-  const time = document.getElementById("time");
 
-  // PLAY / PAUSE
   playBtn.addEventListener("click", () => {
     if (audio.paused) {
       audio.play();
@@ -102,31 +93,16 @@
     }
   });
 
-  // ACTUALIZAR BARRA Y TIEMPO
   audio.addEventListener("timeupdate", () => {
     const percent = (audio.currentTime / audio.duration) * 100;
     progress.style.width = percent + "%";
-
-    let current = formatTime(audio.currentTime);
-    let duration = formatTime(audio.duration);
-    time.textContent = `${current} / ${duration}`;
   });
 
-  // CLICK EN BARRA (AVANZAR)
   progressContainer.addEventListener("click", (e) => {
     const width = progressContainer.clientWidth;
     const clickX = e.offsetX;
     audio.currentTime = (clickX / width) * audio.duration;
   });
-
-  // FORMATO DE TIEMPO
-  function formatTime(seconds) {
-    if (isNaN(seconds)) return "0:00";
-    let min = Math.floor(seconds / 60);
-    let sec = Math.floor(seconds % 60);
-    if (sec < 10) sec = "0" + sec;
-    return min + ":" + sec;
-  }
 </script>
 
 </body>
