@@ -12,20 +12,22 @@
   }
 
   .player {
-    display: inline-block;
+  display: flex;
+  flex-direction: column;
+  align-items: center; /* 🔥 esto centra TODO */
   }
 
   .play-btn {
     width: 70px;
     height: 70px;
     border-radius: 50%;
-    border: 2px solid #6b705c;
+    border: 2px solid #ffffff;
     display: flex;
     align-items: center;
     justify-content: center;
     margin: auto;
     font-size: 28px;
-    color: #6b705c;
+    color: #ffffff;
     cursor: pointer;
     transition: 0.3s;
     background: transparent;
@@ -48,13 +50,13 @@
   .progress {
     height: 100%;
     width: 0%;
-    background: #6b705c;
+    background: #ffffff;
   }
 
   .caption {
     margin-top: 10px;
     font-size: 12px;
-    color: #6b705c;
+    color: #ffffff;
     letter-spacing: 2px;
   }
 </style>
