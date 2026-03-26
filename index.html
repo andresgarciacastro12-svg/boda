@@ -5,16 +5,14 @@
 
 <style>
   body {
-    margin: 0;
-    background: transparent; /* 🔥 CLAVE */
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    height: 100vh;
+    text-align: center;
+    margin-top: 80px; /* 👈 esto lo centra como antes */
+    background: transparent; /* 👈 sin fondo */
+    font-family: 'Georgia', serif;
   }
 
   .player {
-    text-align: center;
+    display: inline-block;
   }
 
   .play-btn {
@@ -25,11 +23,12 @@
     display: flex;
     align-items: center;
     justify-content: center;
+    margin: auto;
     font-size: 28px;
     color: #6b705c;
     cursor: pointer;
     transition: 0.3s;
-    background: transparent; /* 🔥 CLAVE */
+    background: transparent;
   }
 
   .play-btn:hover {
